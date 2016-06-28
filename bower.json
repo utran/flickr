@@ -1,0 +1,13 @@
+{
+  "name": "Flickr",
+  "authors": [
+    "utran <utran@induscorp.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "angular": "^1.5.7"
+  }
+}
