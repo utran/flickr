@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html> 
+<head>
+ <title>Flickr Search</title>
+</head> 
+ <body ng-app="app"> 
+     <div ng-controller="AppCtrl as vm">
+	 <h1>Flickr Search</h1>
+   <form name="flickrForm" ng-submit="flickrForm.$valid && vm.submit(vm.tag)">
+   <Span>  <input type="text" ng-model="vm.search_tag" placeholder="Search Tag"/> </span>
+     <button type="submit" ng-click="vm.submit()">Submit</button>
+<div ng-if="vm.startSearching">
+Searching Flickr for photos 
+</div>
+<div ng-if="vm.data.length >0">
+  You found {{vm.data.length}} photos
+<div ng-repeat="photo in vm.data">
+     <img ng-src='https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}.jpg'>
+</img>
+</form>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.js"></script>
+      <script src="app.js"></script>
+ </body>
+ </html>
