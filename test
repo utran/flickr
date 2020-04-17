@@ -1,0 +1,20 @@
+  
+pipeline {
+  agent { label 'skyward-mit-jenkins-slave-t2medium' }
+  parameters {
+				choice(name: 'Environment', choices: ['dev', 'impl'], description: 'Pick Environment')
+				choice(name: 'Pricer', choices: ['irf', 'ipps', 'ltch', 'fqhc', 'opps'], description: 'Pick Pricer')
+			}
+  stages {
+    stage ('Build and Run OWASP ZAP') {
+      steps {
+        echo "Scanning ${params.Pricer} in ${params.Environment} with OWASP ZAP"
+        sh 'sudo docker pull owasp/zap2docker-weekly'
+        sh "sudo docker run -v /home/ec2-user/workspace/pipelineTEST_master:/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t https://app-${params.Environment}.mpsm.cms.gov/${params.Pricer}-pricer/v1/swagger#/price-claim/price -f openapi -r ${params.Pricer}.html | true"
+        archiveArtifacts artifacts:"${params.Pricer}.html"
+      }
+      
+    }
+    
+  }
+}
